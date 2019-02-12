@@ -17,4 +17,4 @@ def to_country(country_code):
     https://www.registers.service.gov.uk/registers/country.
     """
 
-    return "United Kingdom"
+    return register.find(country_code)["name"]

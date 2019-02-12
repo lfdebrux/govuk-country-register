@@ -16,3 +16,10 @@ def test_register():
 
     with pytest.raises(KeyError):
         govuk_country_register.country.register.find("XY") is None
+
+def test_register_find_returns_latest_item():
+    # The Republic of Côte D’Ivoire has two entries
+    # The first entry's item is missing the circumflex above the o
+    # The second entry's item is corrected
+    assert govuk_country_register.country.register.find("CI")["official-name"] \
+            == "The Republic of Côte D’Ivoire"
