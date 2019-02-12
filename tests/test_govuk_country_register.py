@@ -14,6 +14,14 @@ def test_register():
         "citizen-names": "Briton;British citizen",
     }
 
+    assert govuk_country_register.country.register.find("SU") == {
+        "country": "SU",
+        "name": "USSR",
+        "official-name": "Union of Soviet Socialist Republics",
+        "citizen-names": "Soviet citizen",
+        "end-date": "1991-12-25",
+    }
+
     with pytest.raises(KeyError):
         govuk_country_register.country.register.find("XY") is None
 

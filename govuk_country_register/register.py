@@ -9,8 +9,6 @@ class Register:
         "entry-number",
         "entry-timestamp",
         "key",
-        "start-date",
-        "end-date",
     ]
 
     def find(self, key):
@@ -22,8 +20,8 @@ class Register:
     def read_csv(csvfile, metadata_keys):
         for entry in csv.DictReader(csvfile):
             key = entry["key"]
-            metadata = {k: v for k, v in entry.items() if k in metadata_keys}
-            item = {k: v for k, v in entry.items() if k not in metadata_keys}
+            metadata = {k: v for k, v in entry.items() if k in metadata_keys and v}
+            item = {k: v for k, v in entry.items() if k not in metadata_keys and v}
             new_entry = metadata.copy()
             new_entry["item"] = item.copy()
             yield (key, new_entry)
