@@ -1,6 +1,6 @@
 
 import csv
-from pathlib import Path
+from os import PathLike
 
 class Register:
 
@@ -18,21 +18,29 @@ class Register:
 
         return self.data[key]["item"]
 
-    @classmethod
-    def from_csv(cls, path):
-        """Read a register CSV file
+    @staticmethod
+    def read_csv(csvfile, metadata_keys):
+        for entry in csv.DictReader(csvfile):
+            key = entry["key"]
+            metadata = {k: v for k, v in entry.items() if k in metadata_keys}
+            item = {k: v for k, v in entry.items() if k not in metadata_keys}
+            new_entry = metadata.copy()
+            new_entry["item"] = item.copy()
+            yield (key, new_entry)
 
-        :param os.PathLike path:  path to the CSV file
+    @classmethod
+    def from_csv(cls, csvfile):
+        """Create a register object from a CSV file
+
+        :param csvfile:  CSV file path or stream
+        :type csvfile: os.PathLike or file object
         """
 
-        data = {}
-        with open(path, newline="") as f:
-            for record in csv.DictReader(f):
-                key = record["key"]
-                metadata = {k: v for k, v in record.items() if k in cls.__metadata_keys__}
-                item = {k: v for k, v in record.items() if k not in cls.__metadata_keys__}
-                data[key] = metadata.copy()
-                data[key]["item"] = item.copy()
+        if isinstance(csvfile, (str, PathLike)):
+            with open(csvfile, newline="") as f:
+                data = dict(cls.read_csv(f, metadata_keys=cls.__metadata_keys__))
+        else:
+            data = dict(cls.read_csv(csvfile, metadata_keys=cls.__metadata_keys__))
 
         register = cls.__new__(cls)
         register.data = data
