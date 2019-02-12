@@ -1,7 +1,14 @@
 
+import pkg_resources
+from io import TextIOWrapper
+
 from govuk_country_register.register import Register
 
-register = Register.from_csv("country.csv")
+register = Register.from_csv(
+    TextIOWrapper(
+        pkg_resources.resource_stream("govuk_country_register", "country.csv")
+    )
+)
 
 def to_country(country_code):
     """Find the name for a country from its two-letter country code
