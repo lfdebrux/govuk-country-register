@@ -20,6 +20,10 @@ jinja_env.filters["to_country"] = to_country
 
 ## Version History
 
+2019-03-14 version 0.3.0
+
+- Update country data
+
 2019-02-12 version 0.2.2
 
 - Fix PyPI readme
