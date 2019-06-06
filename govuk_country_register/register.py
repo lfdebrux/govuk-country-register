@@ -35,7 +35,7 @@ class Register:
         """
 
         if isinstance(csvfile, (str, PathLike)):
-            with open(csvfile, newline="") as f:
+            with open(csvfile, newline="", encoding="utf-8") as f:
                 data = dict(cls.read_csv(f, metadata_keys=cls.__metadata_keys__))
         else:
             data = dict(cls.read_csv(csvfile, metadata_keys=cls.__metadata_keys__))
