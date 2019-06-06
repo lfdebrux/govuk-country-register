@@ -20,6 +20,10 @@ def test_register_object_can_be_constructed_from_csv_file_using_list_of_strings(
     register = Register.from_csv(contents)
     assert register.find("A")
 
+def test_register_object_can_be_constructed_from_csv_file_distributed_with_package(shared_datadir):
+    register = Register.from_pkg_resource("country.csv")
+    assert register.find("GB")
+
 def test_register_csv_can_contain_unicode_characters(shared_datadir, ascii_locale):
     register = Register.from_csv(shared_datadir / "letter.csv")
     assert register.find("Ñ")

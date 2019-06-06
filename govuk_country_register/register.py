@@ -1,6 +1,9 @@
 
 import csv
+from io import TextIOWrapper
 from os import PathLike
+from pkg_resources import resource_stream
+
 
 class Register:
 
@@ -47,3 +50,15 @@ class Register:
         register.data = data
 
         return register
+
+    @classmethod
+    def from_pkg_resource(cls, csvfile, pkg=__name__):
+        """Create a register object from a CSV file
+        that is included with a package
+
+        :param csvfile str: CSV file name
+        :param pkg str: package name (defaults to this package)
+        """
+
+        f = TextIOWrapper(resource_stream(pkg, csvfile), encoding="utf-8")
+        return cls.from_csv(f)

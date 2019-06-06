@@ -1,17 +1,9 @@
 
-import pkg_resources
-from io import TextIOWrapper
-
 from govuk_country_register.register import Register
 
 
 def __load__():
-    return Register.from_csv(
-        TextIOWrapper(
-            pkg_resources.resource_stream("govuk_country_register", "country.csv"),
-            encoding="utf-8",
-        )
-    )
+    return Register.from_pkg_resource("country.csv")
 
 
 register = __load__()
