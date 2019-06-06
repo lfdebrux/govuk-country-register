@@ -20,6 +20,10 @@ jinja_env.filters["to_country"] = to_country
 
 ## Version History
 
+2019-06-06 version 0.4.0
+
+- Refactor code to load CSVs from a Python package
+
 2019-06-06 version 0.3.1
 
 - Fix bug where unicode characters would cause issues on systems with the default locale
