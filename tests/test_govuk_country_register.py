@@ -31,3 +31,6 @@ def test_register_find_returns_latest_item():
     # The second entry's item is corrected
     assert govuk_country_register.country.register.find("CI")["official-name"] \
             == "The Republic of Côte D’Ivoire"
+
+def test_register_contains_unicode_items(ascii_locale):
+    govuk_country_register.country.__load__()

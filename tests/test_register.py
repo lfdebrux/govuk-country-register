@@ -19,3 +19,7 @@ def test_register_object_can_be_constructed_from_csv_file_using_list_of_strings(
     contents = (shared_datadir / "letter.csv").read_text().splitlines(keepends=True)
     register = Register.from_csv(contents)
     assert register.find("A")
+
+def test_register_csv_can_contain_unicode_characters(shared_datadir, ascii_locale):
+    register = Register.from_csv(shared_datadir / "letter.csv")
+    assert register.find("Ñ")
