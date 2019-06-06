@@ -16,8 +16,11 @@ class Register:
 
         return self.data[key]["item"]
 
-    @staticmethod
-    def read_csv(csvfile, metadata_keys):
+    @classmethod
+    def read_csv(cls, csvfile, metadata_keys=None):
+        if metadata_keys is None:
+            metadata_keys = cls.__metadata_keys__
+
         for entry in csv.DictReader(csvfile):
             key = entry["key"]
             metadata = {k: v for k, v in entry.items() if k in metadata_keys and v}
@@ -36,9 +39,9 @@ class Register:
 
         if isinstance(csvfile, (str, PathLike)):
             with open(csvfile, newline="", encoding="utf-8") as f:
-                data = dict(cls.read_csv(f, metadata_keys=cls.__metadata_keys__))
+                data = dict(cls.read_csv(f))
         else:
-            data = dict(cls.read_csv(csvfile, metadata_keys=cls.__metadata_keys__))
+            data = dict(cls.read_csv(csvfile))
 
         register = cls.__new__(cls)
         register.data = data
