@@ -20,6 +20,10 @@ jinja_env.filters["to_country"] = to_country
 
 ## Version History
 
+2019-08-16 version 0.5.0
+
+- Update country data
+
 2019-06-06 version 0.4.0
 
 - Refactor code to load CSVs from a Python package
